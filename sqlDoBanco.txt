@@ -1,0 +1,42 @@
+create table vinil(
+    idvinil bigint auto_increment,
+    nome varchar(50) not null,
+    descricao varchar(100) not null,
+    preco double not null,
+    genero varchar(30) not null,
+    gravadora varchar(30) not null,
+    primary key(idvinil)
+);
+
+create table musica(
+    idmusica bigint auto_increment,
+    nome varchar(50) not null,
+    duracao double not null,
+    compositor varchar(30) not null,
+    instrumentos varchar(100) not null,
+    popularidade int not null,
+    idvinil bigint, 
+    primary key (idmusica),
+    foreign key (idvinil) references vinil(idvinil)
+);
+
+insert into vinil(idvinil, nome, descricao, preco, genero, gravadora)
+values (null,"Somewhere in Time", "Álbum futurista", "55.75", "Heavy Metal Britânico", "EMI"),
+(null,"Partners in Crime", "3 Sucessos de 40 de Rupert Holmes", "62.55", "Soft rock", "MCA Records"),
+(null,"Houses of the Holy", "Calçada dos Gigantes", "48.20", "Hard Rock, Blues Rock", "Atlantic Records"),
+(null,"Led Zeppelin II", "Final dos Anos 60", "75.10", "Blues Rock", "Atlantic Records"),
+(null,"The Number of the Beast", "666", "40.00", "Heavy Metal Britânico", "Harvest Records"),
+(null,"Toulouse Street", "1 milhão de sópias nos EUA", "60.00", "Rock", "Warner Bros. Records"),
+(null,"Minute by Minute", "Indicação ao Grammy", "90.25", "Rock n' Roll Clássico", "Warner Brothers Studios");
+
+insert into musica(idmusica, nome, duracao, compositor, instrumentos, popularidade)
+values (null,"Open Your Eyes", "3.18", "Ted Templeman", "Piano, Bateria, Contrabaixo", "70"),
+(null,"What a Fool Believes", "3.41", "Ted Templeman", "Piano, Bateria, Contrabaixo, Guitarra", "75"),
+(null,"Whole Lotta Love", "5.34", "Jimmy Page/ Robert Plant", "Bateria, Contrabaixo, Guitarra (2)", "80"),
+(null,"Ramble On", "3.18", "Jimmy Page/ Robert Plant", "Bateria, Contrabaixo, Guitarra, Violão", "90"),
+(null,"Heartbreaker", "4.15", "Jimmy Page/ Robert Plant", "Piano, Bateria, Contrabaixo", "70"),
+(null,"Wasted Years", "5.07", "Adrian Smith", "Bateria, Contrabaixo, Guitarra Sintetizada(2)", "95"),
+(null,"Children of the Damned", "6.00", "Adrian Smith, Steve Harris", "Bateria, Contrabaixo, Guitarra Sintetizaada(2)", "50"),
+(null,"Escape (The Piña Colada Song)", "4.34", "Rupert Holmes", "Piano, Bateria, Contrabaixo, Guitarra", "100"),
+(null,"Him", "4.04", "Rupert Holmes", "Piano, Bateria, Contrabaixo,Guitarra", "75"),
+(null,"Listen to The Music", "4.44", "Tom Johnston", "Violão, Bateria, Contrabaixo", "80");
