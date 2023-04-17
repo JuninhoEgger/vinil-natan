@@ -11,7 +11,7 @@ package dao;
  * @since 14:51 - 09/07/2018
  * @version Vinil II
  */
-public class DAOFactory {
+public class daofactory_1 {
     
     private static final VinilDAO vinilDAO = new VinilDAO();
     private static final MusicaDAO musicaDAO = new MusicaDAO();

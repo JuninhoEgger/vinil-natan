@@ -8,7 +8,7 @@ package servicos;
 import dao.DAOFactory;
 import dao.VinilDAO;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import modelo.VinilVO;
 
 /**
@@ -24,14 +24,14 @@ public class VinilServicos {
         vDAO.cadastrarVinil(vVO);
     }// fecha método cadastrarVinil
     
-    public ArrayList<VinilVO> buscarVinis() throws SQLException {
+    public List<VinilVO> buscarVinis() throws SQLException {
         VinilDAO vDAO = DAOFactory.getVinilDAO();
         return vDAO.buscarVinis();
     }//fecha método buscarVinis
     
-    public ArrayList<VinilVO> filtrar(String query) throws SQLException {
+    public List<VinilVO> filtrar(long id) throws SQLException {
         VinilDAO vDAO = DAOFactory.getVinilDAO();
-        return vDAO.filtrarVinis(query);
+        return vDAO.filtrarVinis(id);
     }//fecha método filtrar
     
     public void deletarVinil(long id) throws SQLException {

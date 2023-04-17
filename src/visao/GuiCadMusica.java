@@ -5,7 +5,7 @@
  */
 package visao;
 
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.MusicaVO;
 import modelo.VinilVO;
@@ -217,7 +217,7 @@ public class GuiCadMusica extends javax.swing.JInternalFrame {
     private void preencherCombo(){
         try {
             VinilServicos vs = ServicosFactory.getVinilServicos();
-            ArrayList<VinilVO> v = vs.buscarVinis();
+            List<VinilVO> v = vs.buscarVinis();
 
             for (int i = 0; i < v.size(); i++) {
                 jcomboVinil.addItem(v.get(i));

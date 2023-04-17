@@ -6,6 +6,7 @@
 package visao;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.VinilVO;
@@ -287,7 +288,7 @@ public class GuiManutencaoVinil extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void buscarTabela() {
         try {
-            ArrayList<VinilVO> vinis = new ArrayList<>();
+            List<VinilVO> vinis;
             VinilServicos vs = ServicosFactory.getVinilServicos();
             vinis = vs.buscarVinis();
             
@@ -361,7 +362,8 @@ public class GuiManutencaoVinil extends javax.swing.JInternalFrame {
                 }//fecha if
                 
                 VinilServicos vs = ServicosFactory.getVinilServicos();
-                ArrayList<VinilVO> vinil = vs.filtrar(query);
+                //TODO
+                List<VinilVO> vinil = vs.filtrar(1);
                 
                 for (int i = 0; i <vinil.size(); i++) {
                     dtm.addRow(new String[]{
