@@ -5,7 +5,6 @@
  */
 package visao;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -346,9 +345,10 @@ public class GuiManutencaoVinil extends javax.swing.JInternalFrame {
             } else {
                 String query = "";
                 String filtro = jcomboFiltro.getSelectedItem().toString();
-                
+                long id = 0;
                 if (filtro.equalsIgnoreCase("Código")) {
                     query="where idvinil like '%"+jtPesquisa.getText()+"%'";
+                    id = Long.valueOf(jtPesquisa.getText());
                 } else if (filtro.equalsIgnoreCase("Nome")){
                     query="where nome like '%"+jtPesquisa.getText()+"%'";
                 } else if (filtro.equalsIgnoreCase("Descrição")){
@@ -362,8 +362,8 @@ public class GuiManutencaoVinil extends javax.swing.JInternalFrame {
                 }//fecha if
                 
                 VinilServicos vs = ServicosFactory.getVinilServicos();
-                //TODO
-                List<VinilVO> vinil = vs.filtrar(1);
+                //TODO                
+                List<VinilVO> vinil = vs.filtrar(id);
                 
                 for (int i = 0; i <vinil.size(); i++) {
                     dtm.addRow(new String[]{

@@ -22,6 +22,7 @@ public class VinilDAO {
     private final MockDatabase bancoSimulado = new MockDatabase();
 
     public void cadastrarVinil(VinilVO vVO) throws SQLException {
+        vVO.setIdVinil(bancoSimulado.getVinis().size() + 1);
         bancoSimulado.getVinis().add(vVO);
     }
 

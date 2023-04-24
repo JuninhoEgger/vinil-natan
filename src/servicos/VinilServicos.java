@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servicos;
 
 import dao.DAOFactory;
@@ -11,12 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 import modelo.VinilVO;
 
-/**
- *
- * @author Natan Fraga 
- * @since 16:15 - 09/07/2018
- * @version Vinil II
- */
 public class VinilServicos {
     
     public void cadastrarVinil(VinilVO vVO) throws SQLException {
