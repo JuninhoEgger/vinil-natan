@@ -1,147 +1,49 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import modelo.MusicaVO;
-import persistencia.ConexaoBanco;
+import persistencia.MockDatabase;
 
-/**
- *
- * @author Natan Fraga 
- * @since 15:02 - 09/07/2018
- * @version Vinil II
- */
 public class MusicaDAO {
-        public void cadastrarMusica(MusicaVO mVO) throws SQLException{
-        Connection con = ConexaoBanco.getConexao();
-        Statement stat = con.createStatement();
-        try {
-            String sql; 
-            
-            sql = "insert into musica(idmusica, nome, duracao, compositor, instrumentos, popularidade)"
-                    +"values(null,'"+mVO.getNome()+"',"+mVO.getDuracao()+",'"+mVO.getCompositor()+"','"+mVO.getInstrumentos()+"',"+mVO.getPopularidade()+")";
-            
-            stat.execute(sql);
-            
-        } catch (SQLException se) {
-            throw new SQLException("Erro ao cadastrar a música! "+se.getMessage());
-        } finally {
-            con.close();
-            stat.close();
-        }//fecha finally
-    }//fecha método cadastrarMusica
-        
-    public ArrayList<MusicaVO> buscarMusicas() throws SQLException {
-        
-        Connection con = ConexaoBanco.getConexao();
-        Statement stat = con.createStatement();
-        
-        try {
-            String sql;
-            sql = "select * from musica";
-            ResultSet rs = stat.executeQuery(sql);
-            ArrayList<MusicaVO> musicas = new ArrayList<>();
-            
-            while (rs.next()) {
-                MusicaVO mVO = new MusicaVO();
-                
-                mVO.setIdMusica(rs.getLong("idmusica"));
-                mVO.setNome(rs.getString("nome"));
-                mVO.setDuracao(rs.getDouble("duracao"));
-                mVO.setCompositor(rs.getString("compositor"));
-                mVO.setInstrumentos(rs.getString("instrumentos"));
-                mVO.setPopularidade(rs.getInt("popularidade"));
-                musicas.add(mVO);
-            }//fecha while
-            
-            return musicas;
-            
-        } catch (SQLException se) {
-            throw new SQLException("Erro ao buscar dados do Banco! "+se.getMessage());
-        } finally {
-            stat.close();
-            con.close();
-        }//fecha finally
-    }//fecha método buscarMusicas  
     
-    public ArrayList<MusicaVO> filtrarMusicas(String query) throws SQLException{
-        
-        Connection con = ConexaoBanco.getConexao();
-        Statement stat = con.createStatement();
-        
-        try {
-            String sql;
-            sql = "select * from musica "+query;
-            ResultSet rs = stat.executeQuery(sql);
-            ArrayList<MusicaVO> musica = new ArrayList<>();
-            
-            while (rs.next()){
-                
-                MusicaVO m = new MusicaVO();
-                
-                m.setIdMusica(rs.getLong("idmusica"));
-                m.setNome(rs.getString("nome"));
-                m.setDuracao(rs.getDouble("duracao"));
-                m.setCompositor(rs.getString("compositor"));
-                m.setInstrumentos(rs.getString("instrumentos"));
-                m.setPopularidade(rs.getInt("popularidade"));
-                
-                musica.add(m);
-            }//fecha while
-            
-            return musica;
-            
-        } catch (SQLException e) {
-            throw new SQLException("Erro ao buscar Vinis! "+e.getMessage());
-        } finally {
-            con.close();
-            stat.close();
-        }//fecha finally 
-    }//fecha método filtrarMusicas
+    private final MockDatabase bancoSimulado = new MockDatabase();
     
-    public void deletarMusica(long id) throws SQLException{
+    public void cadastrarMusica(MusicaVO musica) throws SQLException {
+        musica.setIdMusica(bancoSimulado.getMusicas().size() + 1);
+        bancoSimulado.getMusicas().add(musica);
+    }
+
+    public List<MusicaVO> buscarMusicas() throws SQLException {
+        return bancoSimulado.getMusicas();
+    }
+
+    public List<MusicaVO> filtrarMusicas(long id) throws SQLException {
+        return bancoSimulado.getMusicas()
+                .stream()
+                .filter(musica -> musica.getIdMusica()== id)
+                .collect(Collectors.toList());
+    }
+
+    public void deletarMusica(long id) throws SQLException {
+        bancoSimulado.getMusicas().remove(buscarMusicaPorId(id));
+    }
+
+    public void alterarMusica(MusicaVO musica) throws SQLException {
+        MusicaVO musicaEncontrada = buscarMusicaPorId(musica.getIdMusica());
         
-        Connection con = ConexaoBanco.getConexao();
-        Statement stat = con.createStatement();
+        musicaEncontrada.setNome(musica.getNome());
+        musicaEncontrada.setDuracao(musica.getDuracao());
+        musicaEncontrada.setCompositor(musica.getCompositor());
+        musicaEncontrada.setInstrumentos(musica.getInstrumentos());
+        musicaEncontrada.setPopularidade(musica.getPopularidade());
         
-        try {
-            String sql="delete from musica where idmusica="+id;
-            stat.execute(sql);
-        } catch (Exception e) {
-            throw new SQLException("Erro ao deletar! "+e.getMessage());
-        } finally {
-            
-        }//fecha finally
-    }//fecha deletarMusica
-    
-    public void alterarMusica(MusicaVO mVO) throws SQLException {
+        bancoSimulado.getMusicas().add(musicaEncontrada);
+    }
 
-        Connection con = ConexaoBanco.getConexao();
-        Statement stat = con.createStatement();
+    private MusicaVO buscarMusicaPorId(long id) {
+        return bancoSimulado.getMusicas().stream().filter(musica -> musica.getIdMusica()== id).findFirst().orElse(null);
+    }
 
-        try {
-            String sql;
-
-            sql = "update musica set "
-                    + "nome='" + mVO.getNome() + "', duracao=" + mVO.getDuracao()+ ", compositor='" + mVO.getCompositor() + "', instrumentos='" + mVO.getInstrumentos() + "', popularidade='" + mVO.getPopularidade() + "'"
-                    + "where idmusica=" + mVO.getIdMusica() + "";
-
-            stat.executeUpdate(sql);
-
-        } catch (SQLException se) {
-            throw new SQLException("Erro ao alterar "
-                    + "musica! " + se.getMessage());
-        } finally {
-            con.close();
-            stat.close();
-        }//fecha finally
-    }//fecha alterarMusica
-}//fecha classe MusicaDAO
+}

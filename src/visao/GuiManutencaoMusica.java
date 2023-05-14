@@ -6,6 +6,7 @@
 package visao;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.MusicaVO;
@@ -287,7 +288,7 @@ public class GuiManutencaoMusica extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void buscarTabela() {
         try {
-            ArrayList<MusicaVO> musicas = new ArrayList<>();
+            List<MusicaVO> musicas = new ArrayList<>();
             MusicaServicos ms = ServicosFactory.getMusicaServicos();
             musicas = ms.buscarMusicas();
             
@@ -345,9 +346,11 @@ public class GuiManutencaoMusica extends javax.swing.JInternalFrame {
             } else {
                 String query = "";
                 String filtro = jcomboFiltro.getSelectedItem().toString();
+                long id = 0;
                 
                 if (filtro.equalsIgnoreCase("Código")) {
                     query="where idmusica like '%"+jtPesquisa.getText()+"%'";
+                    id = Long.valueOf(jtPesquisa.getText());
                 } else if (filtro.equalsIgnoreCase("Nome")){
                     query="where nome like '%"+jtPesquisa.getText()+"%'";
                 } else if (filtro.equalsIgnoreCase("Duração")){
@@ -361,7 +364,7 @@ public class GuiManutencaoMusica extends javax.swing.JInternalFrame {
                 }//fecha if
                 
                 MusicaServicos ms = ServicosFactory.getMusicaServicos();
-                ArrayList<MusicaVO> musica = ms.filtrar(query);
+                List<MusicaVO> musica = ms.filtrar(id);
                 
                 for (int i = 0; i <musica.size(); i++) {
                     dtm.addRow(new String[]{

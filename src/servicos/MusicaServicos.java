@@ -6,42 +6,35 @@
 package servicos;
 
 import dao.DAOFactory;
-import dao.daofactory_1;
 import dao.MusicaDAO;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 import modelo.MusicaVO;
 
-/**
- *
- * @author Natan Fraga 
- * @since 16:24 - 09/07/2018
- * @version Vinil II
- */
 public class MusicaServicos {
     
-    public void cadastrarMusica(MusicaVO mVO) throws SQLException{
+    public void cadastrarMusica(MusicaVO musica) throws SQLException {
         MusicaDAO mDAO = DAOFactory.getMusicaDAO();
-        mDAO.cadastrarMusica(mVO);
-    }//fecha método cadastrarMusica
+        mDAO.cadastrarMusica(musica);
+    }
     
-    public ArrayList<MusicaVO> buscarMusicas() throws SQLException {
+    public List<MusicaVO> buscarMusicas() throws SQLException {
         MusicaDAO mDAO = DAOFactory.getMusicaDAO();
         return mDAO.buscarMusicas();
-    }//fecha método buscarMusicas
+    }
     
-    public ArrayList<MusicaVO> filtrar(String query) throws SQLException {
+    public List<MusicaVO> filtrar(long id) throws SQLException {
         MusicaDAO mDAO = DAOFactory.getMusicaDAO();
-        return mDAO.filtrarMusicas(query);
-    }//fecha método filtrar
+        return mDAO.filtrarMusicas(id);
+    }
     
     public void deletarMusica(long id) throws SQLException {
         MusicaDAO mDAO = DAOFactory.getMusicaDAO();
         mDAO.deletarMusica(id);
-    }//fecha método deletarMusica
+    }
     
-    public void alterarMusica(MusicaVO mVO) throws SQLException {
+    public void alterarMusica(MusicaVO musica) throws SQLException {
         MusicaDAO mDAO = DAOFactory.getMusicaDAO();
-        mDAO.alterarMusica(mVO);
-    }//fecha método alterarMusica
-}//fecha classe MusicaServicos
+        mDAO.alterarMusica(musica);
+    }
+}
