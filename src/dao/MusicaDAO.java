@@ -38,6 +38,7 @@ public class MusicaDAO {
         musicaEncontrada.setCompositor(musica.getCompositor());
         musicaEncontrada.setInstrumentos(musica.getInstrumentos());
         musicaEncontrada.setPopularidade(musica.getPopularidade());
+        musicaEncontrada.setV(musica.getV());
         
         bancoSimulado.getMusicas().add(musicaEncontrada);
     }
